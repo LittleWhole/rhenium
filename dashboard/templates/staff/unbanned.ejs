@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("blocks/head.ejs") %>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <a class="navbar-brand" href="/staff"><span class="fa fa-lock"></span> Staff Panel</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav-content">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/staff/support">Support Panel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/staff/mod">Mod Panel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/staff/admin">Admin Panel</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-3 text-center">
+        <% if (perms.level > 4) { %>
+            <% if (!data.unbanned) { %>
+                <h1 class="text-secondary"><span class="fa fa-times-circle"></span></h1>
+                <span>Unknown ban! <br><a href="/staff/" class="btn btn-danger">Go Back</a></span>
+            <% } else { %>
+                <h1 class="text-secondary"><span class="fa fa-check-circle"></span></h1>
+                <span><%= data.unbanned.tag || "User" %> unbanned! <br><a href="/staff/" class="btn btn-danger">Go Back</a></span>
+            <% } %>
+        <% } else { %>
+            <h1 class="text-secondary"><span class="fa fa-times-circle"></span></h1>
+            <span>You don't have permission to do that! <br><a href="/staff/" class="btn btn-danger">Go Back</a></span>
+        <% } %>
+
+    </body>
+
+</html>

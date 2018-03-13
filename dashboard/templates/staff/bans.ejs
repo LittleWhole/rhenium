@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <link rel="stylesheet" href="../../public/bootstrap-4.0.0/css/bootstrap-themed.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="icon" href="https://cdn.discordapp.com/attachments/275170046555324416/348665349576720384/diamondfirelogo.png">
+            
+        <title>VerifyBot Staff Panel | mcdiamondfire.com</title>
+    </head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-admin">
+        <a class="navbar-brand" href="/staff"><span class="fa fa-lock"></span> Staff Panel</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav-content">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/staff/support">Support Panel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/staff/mod">Mod Panel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/staff/admin">Admin Panel</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-3">
+        <h1>Bans <div class="badge badge-admin"><%= data.bans.size %></div></h1>
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">User Tag</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Ban Reason</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <%- data.bans.sort((a, b) => a.user.tag > b.user.tag).map(ban => {
+                    return `
+                    <tr>
+                        <td>${ban.user.tag}</td>
+                        <td>${ban.user.id}</td>
+                        <td>${ban.reason || "No reason provided."}</td>
+                        <td><a href="bans/revoke/${ban.user.id}" class="btn btn-admin">Revoke Ban</a></td>
+                    </tr>`;
+                }).join("\n") %>
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="footer bottom bg-admin text-white text-center">
+        <div class="container">
+            <span>By using VerifyBot, you allow us to store your Discord user data. <button class="btn btn-outline-light" onclick="$('footer').animate({ opacity: 0 })">I agree</button></span>
+        </div>
+    </footer>
+</body>
+
+</html>

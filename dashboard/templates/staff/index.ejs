@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("blocks/head.ejs") %>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-blurple">
+        <a class="navbar-brand" href="/staff"><span class="fa fa-lock"></span> Staff Panel</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav-content">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/staff/support">Support Panel</a>
+                </li>
+                <% if (perms.level >= 4) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/mod">Mod Panel</a>
+                    </li>
+                <% } %>
+                <% if (perms.level >= 5) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/admin">Admin Panel</a>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-3">
+        <h1>Welcome to the staff panel!</h1>
+        Welcome to the staff panel, <%= user.username %>! You are currently <%= perms.name %>. The staff panel has a bunch of useful features for support, moderators, and admins. You can see a ban list, manage members, check queue, and more!</i>
+    </div>
+
+    <footer class="footer bottom bg-blurple text-white text-center">
+        <div class="container">
+            <span>By using VerifyBot, you allow us to store your Discord user data. <button class="btn btn-outline-light" onclick="$('footer').animate({ opacity: 0 })">I agree</button></span>
+        </div>
+    </footer>
+
+    <%- include("blocks/footer.ejs") %>
+</body>
+
+</html>

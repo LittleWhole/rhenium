@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("blocks/head.ejs") %>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-admin">
+        <a class="navbar-brand" href="/staff"><span class="fa fa-lock"></span> Staff Panel</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav-content">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/staff/support">Support Panel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/staff/mod">Mod Panel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/staff/admin">Admin Panel</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-3">
+        <% if (mode === "success") { %>
+            <h1><span class="fa fa-check-circle"></span> Success!</h1>
+        <% } else if (mode === "error") { %>
+            <h1><span class="fa fa-times-circle"></span> Something went wrong...</h1>
+        <% } %>
+
+        <h1>Bot Stats</h1>
+        <ul>
+            <li><b><%= client.guild.memberCount %></b> total members.</li>
+            <li><b><%= client.guild.members.filter(m => m.roles.exists("name", "Verified")).size %></b> verified members.</li>
+            <li>VerifyBot has been online for <b><%= data.ms(client.uptime, { verbose: true, secDecimalDigits: 0 }) %></b>.</li>
+        </ul>
+
+        <h1>Nodes</h1>
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Last Updated</th>
+                    <th scope="col">Players</th>
+                </tr>
+            </thead>
+            <tbody>
+            <%- data.nodes.list.map(({ node, online, updated, players }) => {
+                return `
+                <tr>
+                    <td>${node}</td>
+                    <td>${online ? "Online" : "Offline"}</td>
+                    <td>${updated > Date.now() ? "Unable to fetch" : `${data.ms(Date.now() - updated, { verbose: true, secDecimalDigits: 0 })} ago`}</td>
+                    <td>${!online || players === 0 ? "None" : players}</td>
+                </tr>
+                `;
+            }).join("\n") %>
+        </tbody>
+        </table>
+
+        <h1>Admin Controls</h1>
+        <ul class="nostyle">
+            <li class="mb-1"><a href="admin/lockdown" class="btn btn-admin" data-toggle="tooltip" title="Prevents users from verifying and disables sending messages.">Toggle Lockdown Mode (Currently <%= data.onLockdown ? "on" : "off" %>)</a></li>
+            <li class="mb1"><a href="admin/bans" class="btn btn-admin">View Bans</a></li>
+        </ul>
+
+        <h1>Post an Announcement</h1>
+        <form method="post" action="admin/announcement">
+            <div class="form-group">
+                <label>Title</label>
+                <input class="form-control" name="title" placeholder="Congrats!">
+            </div>
+            <div class="form-group">
+                <label>Main Content</label>
+                <textarea class="form-control" name="body" placeholder="@RedstoneDaedalus has been promoted to the rank of **Admin**!"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Role to Mention</label>
+                <select name="role" class="form-control">
+                    <option value="@everyone">@everyone</option>
+                    <option value="@here">@here</option>
+                    <option value="none">No Mention</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Image URL</label>
+                <input type="text" class="form-control" name="image">
+                <small class="text-muted">This currently only accepts image URLs. Upload the image to <a class="text-admin" href="https://imgur.com/">imgur.com</a>, or upload it to Discord, right click the image, and click "Copy Link." If you use this method, you cannot delete the message containing the image.</small>
+            </div>
+
+            <div class="form-check">
+                <input name="anonymous" type="checkbox" class="form-check-input">
+                <label>Anonymous?</label>
+            </div>
+            <div class="form-group">
+                <label>Color</label>
+                <input name="color" class="form-control" value="#7289DA">
+            </div>
+
+            <button type="submit" class="btn btn-admin"><span class="fa fa-share-square"></span> Post</button>
+        </form>
+    </div>
+
+    <footer class="footer bottom bg-admin text-white text-center">
+        <div class="container">
+            <span>By using VerifyBot, you allow us to store your Discord user data. <button class="btn btn-outline-light" onclick="$('footer').animate({ opacity: 0 })">I agree</button></span>
+        </div>
+    </footer>
+
+    <%- include("blocks/footer.ejs") %>
+</body>
+
+</html>

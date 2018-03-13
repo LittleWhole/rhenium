@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<%- include("blocks/head.ejs") %>
+
+    <body>
+        <nav class="navbar navbar-expand-md navbar-dark bg-blurple">
+            <a class="navbar-brand" href="http://www.mcdiamondfire.com">
+                <img class="img-thumbnail" src="public/assets/icon.png" height="40" width="40">
+                mcdiamondfire.com
+            </a>
+            
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="nav-content">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="http://www.mcdiamondfire.com" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="http://www.mcdiamondfire.com/forum" class="nav-link">Forum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="http://www.mcdiamondfire.com/shop" class="nav-link">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="http://www.mcdiamondfire.com/about" class="nav-link">About</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container mt-3 text-center">
+            <% if (data.message) { %>
+                <%- data.message %>
+            <% } else if (!client.guild.members.has(user.id)) { %>
+                You aren't on the Discord server! <a href="https://discord.gg/pDHBbBD" class="btn btn-blurple">Join</a> <a href="/" class="btn btn-blurple">Reload</a>
+            <% } else if (perms.level > 1) { %>
+            Your account is already verified! <%- perms.level > 2 ? `<a href="/staff" class="btn btn-blurple">Go to Staff Panel</a>` : "" %>
+            <% } else { %>
+            <form method="post" class="text-left">
+                <div class="form-group">
+                    <label>
+                        <span class="fa fa-lock"></span> Secret Key
+                        <button type="button" class="btn btn-blurple" data-toggle="modal" data-target="#help">?</button>
+                    </label>
+                    <input type="text" class="form-control" name="key" placeholder="AbCd1234">
+                </div>
+                
+                <button type="submit" class="btn btn-blurple">
+                <span class="fa fa-check"></span> Verify</button>
+            </form>
+            <% } %>
+        </div>
+
+        <%- include("blocks/footer.ejs") %>
+
+            <script type="text/javascript">
+                const time = new Date();
+                if (time.getMonth() === 3 && time.getDate() === 1) {
+                    $(".icon").attr("src",
+                        "https://cdn.discordapp.com/attachments/239551387627814922/416369599597248512/yes.gif");
+                    $("body").attr("style",
+                        "background-image: url(https://cdn.discordapp.com/attachments/351449501032120330/393472342489169940/unknown.png)"
+                    )
+                };
+            </script>
+    </body>
+
+</html>

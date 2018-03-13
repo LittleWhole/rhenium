@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <%- include("blocks/head.ejs") %>
+    <body>        
+          <div class="container mt-3">
+            <% if (!data) { %>
+                <div class="alert alert-danger">
+                    Invalid or expired token. <a href="/" class="btn btn-outline-danger">Try again</a>
+                </div>
+            <% } else { %>
+                <div class="alert alert-success">
+                    <span class="fa fa-check"></span> Account verified!
+                </div>
+            <% } %>
+          </div>
+        
+          <%- include("blocks/footer.ejs") %>
+    </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("blocks/head.ejs") %>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-support">
+        <a class="navbar-brand" href="/staff"><span class="fa fa-lock"></span> Staff Panel</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav-content">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/staff/support">Support Panel</a>
+                </li>
+                <% if (perms.level >= 4) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/mod">Mod Panel</a>
+                    </li>
+                <% } %>
+                <% if (perms.level >= 5) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/admin">Admin Panel</a>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-3">
+        <% if (mode === "success") { %>
+            <h1><span class="fa fa-check-circle"></span> Success!</h1>
+        <% } else if (mode === "error") { %>
+            <h1><span class="fa fa-times-circle"></span> Something went wrong...</h1>
+        <% } %>
+        
+        <h1>Support Stats</h1>
+        <ul>
+            <% if (data.sessions.length > 0) { %>
+            <li><b><%= data.sessions.length %></b> total sessions.</li>
+            <li><b><%= Array.from(new Set(data.sessions.map(s => s.name))).length %></b> individual players helped.</li>
+            <li><b><%= data.month.length %></b> sessions this month.</li>
+            <li><b><%= data.ms(data.sessions.reduce((t, s) => t += s.duration, 0), { verbose: true, secDecimalDigits: 0 }) %></b> of session time.</li>
+        <% } else { %>
+            No sessions completed.
+        <% } %>
+        </ul>
+
+        <h1>Support Queue <div class="badge badge-support"><%= data.queue.length %></div></h1>
+        <ol>
+            <%- data.queue.sort((a, b) => b.enter_time - a.enter_time).map(entry => `<li>${entry.player}</li>`).join("\n") %>
+        </ol>
+
+        <% if (perms.level >= 3) { %>
+            <h1>Support Reminder</h1>
+            <ul class="nostyle">
+                <li>
+                    <form method="post" class="d-inline-block" action="support/notify/mention">
+                        <button type="submit" class="btn btn-support" data-toggle="tooltip" title="Mention all online support reminding them to do queue.">@ Online</button>
+                    </form>
+                    <form method="post" class="d-inline-block" action="support/notify/dm">
+                        <button type="submit" class="btn btn-support" data-toggle="tooltip" title="Message all online support reminding them to do queue.">DM Online</button>
+                    </form>
+                </li>
+            </ul>
+        <% } %>
+    </div>
+
+    <footer class="footer bottom bg-support text-white text-center">
+        <div class="container">
+            <span>By using VerifyBot, you allow us to store your Discord user data. <button class="btn btn-outline-light" onclick="$('footer').animate({ opacity: 0 })">I agree</button></span>
+        </div>
+    </footer>
+
+    <%- include("blocks/footer.ejs") %>
+</body>
+
+</html>

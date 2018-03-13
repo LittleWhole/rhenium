@@ -1,4 +1,4 @@
-// Run "npm run init" in console to set up VerifyBot
+// Run "npm run init" in console to set up Rhenium
 
 // Module imports
 const program = require("commander");

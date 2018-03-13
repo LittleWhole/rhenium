@@ -1,0 +1,36 @@
+{
+    "current": "2.0",
+    "patches": {
+        "1.0": {
+            "name": "1.0",
+            "additions": [
+                "/verify",
+                "Discord nicknames are changed upon verification"
+            ],
+            "removals": [],
+            "notes": [
+                "It is no longer possible to chat without verifying your account first"
+            ],
+            "released": "08/21/17"
+        },
+        "2.0": {
+            "name": "2.0",
+            "additions": [
+                "Verification is now online instead of through Discord",
+                "Discord moderation commands allow moderators to easily manage members",
+                "Nicknames are now synced every 15 minutes",
+                "VerifyBot's game will change if a node crashes",
+                "It is no longer possible to create message chains",
+                "There is now a caps limit on Discord",
+                "Moderators now have access to edited and deleted messages"
+            ],
+            "removals": [
+                "/verify"
+            ],
+            "notes": [
+                "Some of you may have gotten unverified due to a bug with VerifyBot 1.0 causing users to be removed from the database"
+            ],
+            "released": "03/11/18"
+        }
+    }
+}

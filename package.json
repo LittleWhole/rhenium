@@ -1,0 +1,45 @@
+{
+  "name": "verifybot",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "RedstoneDaedalus",
+  "license": "MIT",
+  "scripts": {
+    "init": "node setup init"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RedstoneDaedalus/verifybot.git"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "commander": "^2.12.2",
+    "cookie-parser": "^1.4.3",
+    "discord.js": "github:hydrabolt/discord.js",
+    "discordblacklist": "^2.0.1",
+    "ejs": "^2.5.7",
+    "events": "^1.1.1",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "helmet": "^3.9.0",
+    "inquirer": "^5.0.0",
+    "level": "^2.1.0",
+    "level-session-store": "^2.1.0",
+    "marked": "^0.3.6",
+    "mysql": "^2.15.0",
+    "node-schedule": "^1.3.0",
+    "passport": "^0.4.0",
+    "passport-discord": "^0.1.3",
+    "path": "^0.12.7",
+    "pretty-ms": "^3.1.0",
+    "session": "^0.1.0",
+    "snekfetch": "^3.6.3",
+    "url": "^0.11.0",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint-config-rallycoding": "^3.2.0",
+    "jsdoc": "^3.5.5"
+  }
+}
